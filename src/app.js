@@ -105,6 +105,20 @@ app.patch("/students/:id", async (req, res) => {
   }
 });
 
+//by name
+app.patch("/students/:name", async (req, res) => {
+  try {
+    const name = req.params.name;
+    const updateStudent = await Student.findOneAndUpdate({ name }, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    res.send(updateStudent);
+  } catch (e) {
+    res.status(500).send(e);
+  }
+});
+
 app.listen(port, () => {
   console.log(`connection is set up at port no ${port}`);
 });
